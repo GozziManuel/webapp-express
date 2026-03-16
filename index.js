@@ -1,19 +1,20 @@
 const express = require("express");
 const app = express();
-const dbConnection = require("./database/databaseMovie");
 
-console.log("User:", process.env.DB_USER);
 app.get("/", (req, res) => {
-  const sqlMovies = "SELECT * FROM `db-movies`.movies";
-  connection.query(sqlMovies);
   res.json({
     success: true,
-    result: "movies",
+    result: "Welcome to the site!",
   });
 });
+
+const router = require("./routers/router");
+app.use("/movies", router);
 
 // Middlewares
 const ErrorCalibrator = require("./middlewares/ErrorCalibrator");
 const notFound = require("./middlewares/notFound404");
 app.use(ErrorCalibrator);
 app.use(notFound);
+
+app.listen(3000, () => {});
