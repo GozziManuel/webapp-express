@@ -5,10 +5,16 @@ function index(req, res) {
   const sqlMovies =
     "SELECT movies.*, AVG(reviews.vote) AS average_vote FROM `db-movies`.movies INNER JOIN `db-movies`.reviews ON movies.id = reviews.movie_id GROUP BY movies.id";
   connection.query(sqlMovies, (err, result) => {
+    const movies = result.map((el) => {
+      return {
+        ...el,
+        image: `http://localhost:3000/${el.image}`,
+      };
+    });
     res.json({
       success: true,
       message: "Ecco a voi i films",
-      results: result,
+      results: movies,
     });
   });
 }
@@ -24,7 +30,8 @@ function show(req, res) {
 
     connection.query(reviewSQL, [paramId], (err, reviewResult) => {
       movie.reviews = reviewResult;
-      res.json({ result: movie });
+      ((movie.image = `http://localhost:3000/${movie.image}`),
+        res.json({ result: movie }));
     });
   });
 }

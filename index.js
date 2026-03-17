@@ -15,6 +15,9 @@ app.get("/", (req, res) => {
 const router = require("./routers/router");
 app.use("/movies", router);
 
+// Public
+app.use(express.static("public"));
+
 // Middlewares
 const ErrorCalibrator = require("./middlewares/ErrorCalibrator");
 const notFound = require("./middlewares/notFound404");
