@@ -1,5 +1,9 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+// Cors bypass
+app.use(cors({ origin: "http://localhost:5173" }));
 
 app.get("/", (req, res) => {
   res.json({
