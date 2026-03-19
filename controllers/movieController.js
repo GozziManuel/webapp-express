@@ -39,14 +39,17 @@ function storeReview(req, res) {
   const { id } = req.params;
   const { name, vote, text } = req.body;
 
-  const sqlReview = `INSERT INTO reviews (movie_id, name, vote, text, created_at, updated_at) VALUES(?, ?, ?, ?, '2022-11-29 11:40:13', '2023-11-29 11:40:13');`;
+  const sqlReview = `INSERT INTO reviews (movie_id, name, vote, text) VALUES(?, ?, ?, ?);`;
   connection.query(sqlReview, [id, name, vote, text], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);
     }
     console.log(result.insertId);
-    res.send(result.insertId);
+    const LastReviewSql = "SELECT * FROM reviews WHERE id = ?";
+    connection.query(LastReviewSql, [result.insertId], (err, result) => {
+      res.json(result[0]);
+    });
   });
 }
 module.exports = { index, show, storeReview };
