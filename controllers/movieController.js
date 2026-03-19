@@ -1,5 +1,4 @@
 const connection = require("../database/databaseMovie");
-const { param } = require("../routers/router");
 
 function index(req, res) {
   const sqlMovies =
@@ -35,5 +34,19 @@ function show(req, res) {
     });
   });
 }
+function storeReview(req, res) {
+  console.log(req.body);
+  const { id } = req.params;
+  const { name, vote, text } = req.body;
 
-module.exports = { index, show };
+  const sqlReview = `INSERT INTO reviews (movie_id, name, vote, text, created_at, updated_at) VALUES(?, ?, ?, ?, '2022-11-29 11:40:13', '2023-11-29 11:40:13');`;
+  connection.query(sqlReview, [id, name, vote, text], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err);
+    }
+    console.log(result.insertId);
+    res.send(result.insertId);
+  });
+}
+module.exports = { index, show, storeReview };

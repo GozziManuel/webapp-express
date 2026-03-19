@@ -6,4 +6,6 @@ router.get("/", postController.index);
 
 router.get("/:id", postController.show);
 
+router.post("/:id/review", postController.storeReview);
+
 module.exports = router;
