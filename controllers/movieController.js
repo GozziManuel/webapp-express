@@ -37,10 +37,10 @@ function show(req, res) {
 function storeReview(req, res) {
   console.log(req.body);
   const { id } = req.params;
-  const { name, vote, text } = req.body;
+  const { name, vote, abstract } = req.body;
 
   const sqlReview = `INSERT INTO reviews (movie_id, name, vote, text) VALUES(?, ?, ?, ?);`;
-  connection.query(sqlReview, [id, name, vote, text], (err, result) => {
+  connection.query(sqlReview, [id, name, vote, abstract], (err, result) => {
     if (err) {
       console.error(err);
       return res.status(500).send(err);

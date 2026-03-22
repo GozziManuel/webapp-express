@@ -22,7 +22,7 @@ app.use(express.static("public"));
 // Middlewares
 const ErrorCalibrator = require("./middlewares/ErrorCalibrator");
 const notFound = require("./middlewares/notFound404");
-app.use(ErrorCalibrator);
 app.use(notFound);
+app.use(ErrorCalibrator);
 
 app.listen(3000, () => {});
